@@ -4,7 +4,12 @@ import gql from "graphql-tag";
 
 class App extends Component {
   render() {
-    const { data: { loading, people } } = this.props;
+    const { data: { loading, error, people } } = this.props;
+
+    if (error) {
+      return <div className="alert alert-danger">{error.message}</div>;
+    }
+
     return (
       <main>
         <header>
@@ -42,6 +47,7 @@ export default graphql(
       people {
         id
         name
+        nonexistent_field
       }
     }
   `
