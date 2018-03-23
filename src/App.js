@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { graphql } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 import gql from "graphql-tag";
 
 class App extends Component {
@@ -36,13 +36,26 @@ class App extends Component {
   }
 }
 
-export default graphql(
-  gql`
-    query ErrorTemplate {
-      people {
-        id
-        name
+export default compose(
+  graphql(
+    gql`
+      query ErrorTemplate {
+        people {
+          id
+          name
+        }
       }
-    }
-  `
+    `
+  ),
+  graphql(
+    gql`
+      query ErrorTemplate {
+        people {
+          id
+          name
+        }
+      }
+    `,
+    { name: 'anotherQuery' }
+  )
 )(App);
